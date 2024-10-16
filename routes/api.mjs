@@ -1,6 +1,8 @@
 import express from 'express'
 import tiktok from 'tiktokdl'
 import fetch from 'node-fetch'
+import yts from 'yt-search'
+import scr from "api-dylux"
 var app = express()
 const creator = "Ndaa"
 /*
@@ -142,14 +144,48 @@ app.get('/openai', async (req, res, next) => {
     let result = await json.json()
     res.json(result)
 })
+// ------------------> Search <------------------------------
+
+app.get('/search/xnxxsearch', async (req, res, next) => {
+    const query = req.query.query
+    if(!query) return res.json(loghandler.notquery)
+        let result = await scr.xnxxSearch(query)
+    res.json(result)
+})
+app.get('/search/xvideossearch', async (req, res, next) => {
+    const query = req.query.query
+    if(!query) return res.json(loghandler.notquery)
+        let result = await scr.xvideosSearch(query)
+    res.json(result)
+})
+app.get('/search/npmsearch', async (req, res, next) => {
+    const query = req.query.query
+    if(!query) return res.json(loghandler.notquery)
+        let result = await scr.npmSearch(query)
+    res.json(result)
+})
+app.get('/search/sticker-search', async (req, res, next) => {
+    const query = req.query.query
+    if(!query) return res.json(loghandler.notquery)
+        let result = await scr.StickerSearch(query)
+    res.json(result)
+})
+
 
 // ------------------> Downloader <------------------------------
+
 
 app.get('/downloader/tiktok', async (req, res, next) => {
     const url = req.query.url;
     if(!url) return res.json(loghandler.noturl)
        let json = await tiktok.tiktokdl(url)
     res.json(json)
+})
+app.get('/downloader/yt-search', async (req, res, next) => {
+    const query = req.query.query
+    if(!query) return res.json(loghandler.notquery)
+        let result = await yts(query)
+    res.json(result)
 })
 
 // --------------------------------> GAMES <------------------------------------
